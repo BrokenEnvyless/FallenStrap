@@ -27,7 +27,7 @@ namespace FallenStrap
 
         public bool CreateStartMenuShortcuts = true;
 
-        public bool EnableAnalytics = false;
+        public bool EnableAnalytics = true;
 
         public bool IsImplicitInstall = false;
 

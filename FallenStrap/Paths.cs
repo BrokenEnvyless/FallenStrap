@@ -29,7 +29,6 @@
         public static string CustomFont => Path.Combine(Modifications, "content\\fonts\\CustomFont.ttf");
         public static string CustomCursor => Path.Combine(Modifications, "content\\textures\\Cursors\\KeyboardMouse\\ArrowCursor.png");
         public static string CustomCursorFar => Path.Combine(Modifications, "content\\textures\\Cursors\\KeyboardMouse\\ArrowFarCursor.png");
-        public static string CustomAvatarBackground => Path.Combine(Modifications, "ExtraContent\\places\\Mobile.rbxl");
 
         public static bool Initialized => !String.IsNullOrEmpty(Base);
 

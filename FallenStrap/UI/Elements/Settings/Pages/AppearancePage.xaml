@@ -180,36 +180,5 @@
                 <TextBlock Grid.Row="3" Grid.Column="1" Margin="0,4,0,0" FontSize="12" Text="{x:Static resources:Strings.Menu_Appearance_CustomisationIcon_Description}" TextWrapping="Wrap" Foreground="{DynamicResource TextFillColorTertiaryBrush}" />
             </Grid>
         </ui:CardExpander>
-        <ui:CardExpander Margin="0,8,0,0" IsExpanded="True">
-            <ui:CardExpander.Header>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Column="0">
-                        <TextBlock FontSize="14" Text="Fondo de la ventana" />
-                        <TextBlock FontSize="12" Text="Reemplaza el fondo por defecto con tu propia imagen (PNG/JPG) o un GIF animado." Foreground="{DynamicResource TextFillColorTertiaryBrush}" />
-                    </StackPanel>
-                </Grid>
-            </ui:CardExpander.Header>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <ui:TextBox Grid.Column="0" Margin="0,0,4,0" Text="{Binding CustomBackgroundLocation, Mode=OneWay}" IsReadOnly="True" />
-                    <ui:Button Grid.Column="1" Margin="4,0,4,0" Height="35" Icon="Folder24" Content="Elegir archivo" Command="{Binding BrowseCustomBackgroundCommand}" />
-                    <ui:Button Grid.Column="2" Margin="4,0,0,0" Height="35" Icon="Delete28" Content="Quitar" Appearance="Danger" Command="{Binding RemoveCustomBackgroundCommand}" />
-                </Grid>
-                <TextBlock Grid.Row="1" Margin="0,4,0,0" FontSize="12" TextWrapping="Wrap" Text="Los GIFs se reproducen en loop. Para mejor rendimiento usa imagenes livianas (menos de 5MB)." Foreground="{DynamicResource TextFillColorTertiaryBrush}" />
-            </Grid>
-        </ui:CardExpander>
     </StackPanel>
 </ui:UiPage>

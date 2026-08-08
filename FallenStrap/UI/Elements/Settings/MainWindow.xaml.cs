@@ -1,9 +1,6 @@
 ﻿using System.ComponentModel;
-using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
 
 using Wpf.Ui.Controls.Interfaces;
 using Wpf.Ui.Mvvm.Contracts;
@@ -36,99 +33,6 @@ namespace FallenStrap.UI.Elements.Settings
                 ShowAlreadyRunningSnackbar();
 
             LoadState();
-            ApplyCustomBackground();
-        }
-
-        public void ApplyCustomBackground()
-        {
-            var path = App.Settings.Prop.SettingsBackgroundPath;
-
-            // corta cualquier animacion de gif previa antes de cambiar de fondo
-            CustomBackgroundImage.BeginAnimation(Image.SourceProperty, null);
-
-            if (string.IsNullOrEmpty(path) || !File.Exists(path))
-            {
-                CustomBackgroundGrid.Visibility = Visibility.Collapsed;
-                DefaultBackgroundGrid.Visibility = Visibility.Visible;
-                return;
-            }
-
-            try
-            {
-                if (Path.GetExtension(path).Equals(".gif", StringComparison.OrdinalIgnoreCase))
-                    PlayAnimatedGif(path);
-                else
-                {
-                    var bitmap = new BitmapImage();
-                    bitmap.BeginInit();
-                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                    bitmap.UriSource = new Uri(path, UriKind.Absolute);
-                    bitmap.EndInit();
-                    bitmap.Freeze();
-                    CustomBackgroundImage.Source = bitmap;
-                }
-
-                DefaultBackgroundGrid.Visibility = Visibility.Collapsed;
-                CustomBackgroundGrid.Visibility = Visibility.Visible;
-            }
-            catch (Exception ex)
-            {
-                App.Logger.WriteLine("MainWindow", $"No se pudo cargar el fondo personalizado: {ex.Message}");
-                CustomBackgroundGrid.Visibility = Visibility.Collapsed;
-                DefaultBackgroundGrid.Visibility = Visibility.Visible;
-            }
-        }
-
-        private void PlayAnimatedGif(string path)
-        {
-            var decoder = new GifBitmapDecoder(new Uri(path, UriKind.Absolute), BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.OnLoad);
-
-            if (decoder.Frames.Count == 0)
-                return;
-
-            if (decoder.Frames.Count == 1)
-            {
-                CustomBackgroundImage.Source = decoder.Frames[0];
-                return;
-            }
-
-            var keyFrames = new ObjectAnimationUsingKeyFrames();
-            var elapsed = TimeSpan.Zero;
-
-            foreach (var frame in decoder.Frames)
-            {
-                keyFrames.KeyFrames.Add(new DiscreteObjectKeyFrame(frame, elapsed));
-                elapsed += GetFrameDelay(frame);
-            }
-
-            // sostiene el ultimo frame hasta completar su propio delay antes de repetir
-            keyFrames.KeyFrames.Add(new DiscreteObjectKeyFrame(decoder.Frames[0], elapsed));
-            keyFrames.Duration = elapsed;
-            keyFrames.RepeatBehavior = RepeatBehavior.Forever;
-
-            CustomBackgroundImage.Source = decoder.Frames[0];
-            CustomBackgroundImage.BeginAnimation(Image.SourceProperty, keyFrames);
-        }
-
-        private static TimeSpan GetFrameDelay(BitmapFrame frame)
-        {
-            const int defaultDelayMs = 100;
-
-            try
-            {
-                if (frame.Metadata is System.Windows.Media.Imaging.BitmapMetadata metadata)
-                {
-                    var query = metadata.GetQuery("/grctlext/Delay");
-                    if (query is ushort delayCentiseconds && delayCentiseconds > 0)
-                        return TimeSpan.FromMilliseconds(delayCentiseconds * 10);
-                }
-            }
-            catch
-            {
-                // algunos gifs no exponen este metadato; usamos el delay por defecto
-            }
-
-            return TimeSpan.FromMilliseconds(defaultDelayMs);
         }
 
         public void LoadState()

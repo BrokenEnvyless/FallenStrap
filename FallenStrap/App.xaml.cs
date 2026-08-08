@@ -13,16 +13,17 @@ namespace FallenStrap
     /// </summary>
     public partial class App : Application
     {
+
 #if QA_BUILD
         public const string ProjectName = "FallenStrap-QA";
 #else
         public const string ProjectName = "FallenStrap";
 #endif
-        public const string ProjectOwner = "BrokenEnvyless";
-        public const string ProjectRepository = "BrokenEnvyless/FallenStrap";
-        public const string ProjectDownloadLink = "https://github.com/BrokenEnvyless/FallenStrap/releases/latest";
-        public const string ProjectHelpLink = "https://github.com/BrokenEnvyless/FallenStrap/wiki";
-        public const string ProjectSupportLink = "https://github.com/BrokenEnvyless/FallenStrap/issues/new";
+        public const string ProjectOwner = "TU_USUARIO_DE_GITHUB"; // <-- cámbialo por tu usuario de GitHub
+        public const string ProjectRepository = "TU_USUARIO_DE_GITHUB/FallenStrap"; // <-- cámbialo por tu repo
+        public const string ProjectDownloadLink = "https://github.com/TU_USUARIO_DE_GITHUB/FallenStrap/releases/latest";
+        public const string ProjectHelpLink = "https://github.com/TU_USUARIO_DE_GITHUB/FallenStrap/wiki";
+        public const string ProjectSupportLink = "https://github.com/TU_USUARIO_DE_GITHUB/FallenStrap/issues/new";
 
         public const string RobloxPlayerAppName = "RobloxPlayerBeta";
         public const string RobloxStudioAppName = "RobloxStudioBeta";

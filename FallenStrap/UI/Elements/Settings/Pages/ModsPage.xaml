@@ -78,21 +78,6 @@
         </controls:OptionControl>
 
         <controls:OptionControl 
-            Header="Fondo del editor de avatar personalizado"
-            Description="Sube tu propio archivo .rbxl (creado en Roblox Studio) para reemplazar el fondo detras del editor de avatar. Sobreescribe la opcion anterior si esta activa.">
-            <StackPanel>
-                <ui:Button Icon="DocumentAdd16" Content="Elegir archivo .rbxl" Command="{Binding ManageCustomAvatarBackgroundCommand}" Visibility="{Binding ChooseCustomAvatarBackgroundVisibility, Mode=OneWay}" />
-                <ui:Button Icon="Delete16" Content="Quitar fondo personalizado" Appearance="Danger" Command="{Binding ManageCustomAvatarBackgroundCommand}" Visibility="{Binding DeleteCustomAvatarBackgroundVisibility, Mode=OneWay}" />
-            </StackPanel>
-        </controls:OptionControl>
-
-        <controls:OptionControl 
-            Header="Skybox personalizado"
-            Description="Importa los 6 archivos .tex de un pack de skybox (formato propietario de Roblox, no PNG/JPG directo). Debes conseguir el pack ya convertido a .tex; FallenStrap no convierte imagenes a este formato.">
-            <ui:Button Icon="DocumentAdd16" Content="Importar archivos .tex" Command="{Binding ImportSkyboxTexturesCommand}" />
-        </controls:OptionControl>
-
-        <controls:OptionControl 
             Header="{x:Static resources:Strings.Menu_Mods_Presets_OldCharacterSounds_Title}" 
             Description="{x:Static resources:Strings.Menu_Mods_Presets_OldCharacterSounds_Description}">
             <ui:ToggleSwitch IsChecked="{Binding OldCharacterSoundsTask.NewState, Mode=TwoWay}" />

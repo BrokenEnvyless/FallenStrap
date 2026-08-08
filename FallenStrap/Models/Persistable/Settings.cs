@@ -17,11 +17,10 @@ namespace FallenStrap.Models.Persistable
         public string Locale { get; set; } = "nil";
         public bool UseFastFlagManager { get; set; } = true;
         public bool WPFSoftwareRender { get; set; } = false;
-        public bool EnableAnalytics { get; set; } = false;
+        public bool EnableAnalytics { get; set; } = true;
         public bool BackgroundUpdatesEnabled { get; set; } = false;
         public bool DebugDisableVersionPackageCleanup { get; set; } = false;
         public string? SelectedCustomTheme { get; set; } = null;
-        public string SettingsBackgroundPath { get; set; } = "";
         public WebEnvironment WebEnvironment { get; set; } = WebEnvironment.Production;
 
         // integration configuration

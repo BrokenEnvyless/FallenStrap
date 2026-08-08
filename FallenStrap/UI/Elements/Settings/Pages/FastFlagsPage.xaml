@@ -84,72 +84,8 @@
 
         <controls:OptionControl 
             Header="Meshes Details"
-            Description="Normal = comportamiento por defecto. Reducido/Minimo bajan la distancia a la que las mallas pierden detalle (mejor rendimiento en PC de gama baja).">
-            <ComboBox Margin="5,0,0,0" Padding="10,5,10,5" Width="160" SelectedIndex="{Binding MeshDetailsLevel, Mode=TwoWay}">
-                <ComboBoxItem Content="Normal" />
-                <ComboBoxItem Content="Reducido" />
-                <ComboBoxItem Content="Minimo" />
-            </ComboBox>
-        </controls:OptionControl>
-
-        <controls:OptionControl 
-            Header="Quitar sombras"
-            Description="Elimina las sombras dinamicas del juego. Mejora bastante el rendimiento en PC de gama baja.">
-            <ui:ToggleSwitch IsChecked="{Binding RemoveShadows, Mode=TwoWay}" />
-        </controls:OptionControl>
-
-        <controls:OptionControl 
-            Header="Pausar Voxelizer / Quitar sombras horneadas"
-            Description="Desactiva el sistema de sombras horneadas (baked shadows) de Roblox. Mejora el rendimiento pero puede causar mapas muy claros u oscuros en algunos juegos.">
-            <ui:ToggleSwitch IsChecked="{Binding PauseVoxelizer, Mode=TwoWay}" />
-        </controls:OptionControl>
-
-        <controls:OptionControl 
-            Header="Desactivar efectos de post-procesado"
-            Description="Quita bloom, correccion de color y otros efectos visuales de postprocesado. Mejora el rendimiento, pero el juego se ve mas plano.">
-            <ui:ToggleSwitch IsChecked="{Binding DisablePostFx, Mode=TwoWay}" />
-        </controls:OptionControl>
-
-        <controls:OptionControl 
-            Header="Desactivar anuncios"
-            Description="Intenta desactivar los anuncios en juego (billboards publicitarios). No siempre funciona en todos los juegos.">
-            <ui:ToggleSwitch IsChecked="{Binding DisableAds, Mode=TwoWay}" />
-        </controls:OptionControl>
-
-        <controls:OptionControl 
-            Header="Buffer de fotogramas reducido"
-            Description="Reduce el tamano del frame buffer para mejor rendimiento en PC de gama baja. Puede introducir un poco mas de input lag.">
-            <ui:ToggleSwitch IsChecked="{Binding LowFrameBuffer, Mode=TwoWay}" />
-        </controls:OptionControl>
-
-        <controls:OptionControl 
-            Header="Desactivar compositor de texturas en segundo plano"
-            Description="Reduce el uso de CPU en segundo plano al cargar texturas. Recomendado para PC con pocos nucleos/hilos.">
-            <ui:ToggleSwitch IsChecked="{Binding DisableTextureCompositor, Mode=TwoWay}" />
-        </controls:OptionControl>
-
-        <controls:OptionControl 
-            Header="Terreno de baja calidad"
-            Description="Reduce la resolucion de las texturas del terreno (Terrain) para mejor rendimiento.">
-            <ui:ToggleSwitch IsChecked="{Binding LowQualityTerrain, Mode=TwoWay}" />
-        </controls:OptionControl>
-
-        <controls:OptionControl 
-            Header="Modo de rendimiento (Perf Mode)"
-            Description="Activa un modo de renderizado especial de Roblox pensado para equipos de gama muy baja.">
-            <ui:ToggleSwitch IsChecked="{Binding PerfMode, Mode=TwoWay}" />
-        </controls:OptionControl>
-
-        <controls:OptionControl 
-            Header="Saltar niveles de detalle de texturas"
-            Description="Carga las texturas con menos nitidez a cambio de mas FPS y menor uso de memoria.">
-            <ui:ToggleSwitch IsChecked="{Binding SkipMipmaps, Mode=TwoWay}" />
-        </controls:OptionControl>
-
-        <controls:OptionControl 
-            Header="Reducir actualizaciones de luces dinamicas"
-            Description="Limita cuantas luces dinamicas se actualizan por fotograma. Menos carga de CPU/GPU en juegos con mucha iluminacion.">
-            <ui:ToggleSwitch IsChecked="{Binding ReduceLightUpdates, Mode=TwoWay}" />
+            Description="Fuerza que las mallas (meshes) mantengan su maximo nivel de detalle a mayor distancia, evitando que Roblox las simplifique al alejarse.">
+            <ui:ToggleSwitch IsChecked="{Binding MeshDetails, Mode=TwoWay}" />
         </controls:OptionControl>
 
         <controls:OptionControl 
@@ -168,6 +104,36 @@
             Header="Disable Grass"
             Description="Elimina las texturas de pasto por defecto de Roblox.">
             <ui:ToggleSwitch IsChecked="{Binding DisableGrass, Mode=TwoWay}" />
+        </controls:OptionControl>
+
+        <controls:OptionControl 
+            Header="Quitar sombras"
+            Description="Elimina las sombras dinamicas del juego. Mejora bastante el rendimiento en PC de gama baja.">
+            <ui:ToggleSwitch IsChecked="{Binding DisableShadows, Mode=TwoWay}" />
+        </controls:OptionControl>
+
+        <controls:OptionControl 
+            Header="Pausar Voxelizer / Quitar sombras horneadas"
+            Description="Desactiva el sistema de sombras horneadas (baked shadows) de Roblox. Mejora el rendimiento pero puede causar mapas muy claros u oscuros en algunos juegos.">
+            <ui:ToggleSwitch IsChecked="{Binding PauseVoxelizer, Mode=TwoWay}" />
+        </controls:OptionControl>
+
+        <controls:OptionControl 
+            Header="Desactivar efectos de post-procesado"
+            Description="Quita bloom, correccion de color y otros efectos visuales de postprocesado. Mejora el rendimiento, pero el juego se ve mas plano.">
+            <ui:ToggleSwitch IsChecked="{Binding DisablePostFx, Mode=TwoWay}" />
+        </controls:OptionControl>
+
+        <controls:OptionControl 
+            Header="Desactivar compositor de texturas en segundo plano"
+            Description="Reduce el uso de CPU en segundo plano al cargar texturas. Recomendado para PC con pocos nucleos/hilos.">
+            <ui:ToggleSwitch IsChecked="{Binding DisableTextureCompositor, Mode=TwoWay}" />
+        </controls:OptionControl>
+
+        <controls:OptionControl 
+            Header="Saltar niveles de detalle de texturas"
+            Description="Carga las texturas con menos nitidez a cambio de mas FPS y menor uso de memoria.">
+            <ui:ToggleSwitch IsChecked="{Binding SkipTextureMipLevels, Mode=TwoWay}" />
         </controls:OptionControl>
 
         <controls:OptionControl 

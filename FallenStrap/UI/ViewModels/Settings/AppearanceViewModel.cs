@@ -20,8 +20,6 @@ namespace FallenStrap.UI.ViewModels.Settings
 
         public ICommand PreviewBootstrapperCommand => new RelayCommand(PreviewBootstrapper);
         public ICommand BrowseCustomIconLocationCommand => new RelayCommand(BrowseCustomIconLocation);
-        public ICommand BrowseCustomBackgroundCommand => new RelayCommand(BrowseCustomBackground);
-        public ICommand RemoveCustomBackgroundCommand => new RelayCommand(RemoveCustomBackground);
 
         public ICommand AddCustomThemeCommand => new RelayCommand(AddCustomTheme);
         public ICommand DeleteCustomThemeCommand => new RelayCommand(DeleteCustomTheme);
@@ -54,24 +52,6 @@ namespace FallenStrap.UI.ViewModels.Settings
 
             CustomIconLocation = dialog.FileName;
             OnPropertyChanged(nameof(CustomIconLocation));
-        }
-
-        private void BrowseCustomBackground()
-        {
-            var dialog = new OpenFileDialog
-            {
-                Filter = "Imagenes y GIFs|*.png;*.jpg;*.jpeg;*.gif"
-            };
-
-            if (dialog.ShowDialog() != true)
-                return;
-
-            CustomBackgroundLocation = dialog.FileName;
-        }
-
-        private void RemoveCustomBackground()
-        {
-            CustomBackgroundLocation = "";
         }
 
         public AppearanceViewModel(Page page)
@@ -151,17 +131,6 @@ namespace FallenStrap.UI.ViewModels.Settings
 
                 OnPropertyChanged(nameof(Icon));
                 OnPropertyChanged(nameof(Icons));
-            }
-        }
-
-        public string CustomBackgroundLocation
-        {
-            get => App.Settings.Prop.SettingsBackgroundPath;
-            set
-            {
-                App.Settings.Prop.SettingsBackgroundPath = value ?? "";
-                OnPropertyChanged(nameof(CustomBackgroundLocation));
-                ((MainWindow)Window.GetWindow(_page)!).ApplyCustomBackground();
             }
         }
 

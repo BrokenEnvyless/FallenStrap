@@ -26,7 +26,6 @@ namespace FallenStrap
             { "Rendering.TextureQuality.Level", "DFIntTextureQualityOverride" },
 
             { "Rendering.Backend.Vulkan", "FFlagDebugGraphicsPreferVulkan" },
-            { "Rendering.Backend.Vulkan.DisableD3D11", "FFlagDebugGraphicsDisableDirect3D11" },
             { "Rendering.Backend.D3D11", "FFlagDebugGraphicsPreferD3D11" },
             { "Rendering.Backend.OpenGL.Enable", "FFlagDebugGraphicsPreferOpenGL" },
             { "Rendering.Backend.OpenGL.DisableD3D11", "FFlagDebugGraphicsDisableDirect3D11" },
@@ -42,24 +41,17 @@ namespace FallenStrap
 
             { "Performance.FpsUnlocker.Enabled", "DFIntTaskSchedulerTargetFps" },
 
-            { "Rendering.MeshDetails.L01", "DFIntCSGLevelOfDetailSwitchingDistance" },
-            { "Rendering.MeshDetails.L12", "DFIntCSGLevelOfDetailSwitchingDistanceL12" },
-            { "Rendering.MeshDetails.L23", "DFIntCSGLevelOfDetailSwitchingDistanceL23" },
-            { "Rendering.MeshDetails.L34", "DFIntCSGLevelOfDetailSwitchingDistanceL34" },
+            { "Rendering.MeshDetails.MainViewHigh", "DFIntCullFactorPixelThresholdMainViewHighQuality" },
+            { "Rendering.MeshDetails.MainViewLow", "DFIntCullFactorPixelThresholdMainViewLowQuality" },
+            { "Rendering.MeshDetails.ShadowMapHigh", "DFIntCullFactorPixelThresholdShadowMapHighQuality" },
+            { "Rendering.MeshDetails.ShadowMapLow", "DFIntCullFactorPixelThresholdShadowMapLowQuality" },
 
-            { "Rendering.RemoveShadows", "FIntRenderShadowIntensity" },
+            // Nuevos presets agregados - basados en flags documentados por la comunidad (ver flags.json de Fallenware)
+            { "Rendering.DisableShadows", "FIntRenderShadowIntensity" },
             { "Rendering.PauseVoxelizer", "DFFlagDebugPauseVoxelizer" },
             { "Rendering.DisablePostFx", "FFlagDisablePostFx" },
-
-            { "Performance.DisableAds", "FFlagAdServiceEnabled" },
-            { "Performance.FrameBufferSize", "DFIntMaxFrameBufferSize" },
-            { "Performance.TextureCompositorJobs", "DFIntTextureCompositorActiveJobs" },
-
-            { "Performance.LowTerrain", "FIntTerrainArraySliceSize" },
-            { "Performance.PerfMode", "DFFlagDebugPerfMode" },
-            { "Performance.SkipMipmaps", "FIntDebugTextureManagerSkipMips" },
-            { "Performance.LightUpdatesMax", "FIntRenderLocalLightUpdatesMax" },
-            { "Performance.LightUpdatesMin", "FIntRenderLocalLightUpdatesMin" },
+            { "Rendering.TextureCompositor", "DFIntTextureCompositorActiveJobs" },
+            { "Rendering.TextureQuality.SkipMips", "DFIntPerformanceControlTextureQualityBestUtility" },
         };
 
         // Roblox's graphics quality slider (1-10) doesn't map 1:1 to the internal FRM value.

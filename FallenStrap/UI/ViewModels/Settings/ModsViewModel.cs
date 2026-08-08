@@ -18,42 +18,6 @@ namespace FallenStrap.UI.ViewModels.Settings
     {
         private void OpenModsFolder() => Process.Start("explorer.exe", Paths.Modifications);
 
-        private void ImportSkyboxTextures()
-        {
-            var dialog = new OpenFileDialog
-            {
-                Filter = "Roblox texture files (*.tex)|*.tex",
-                Multiselect = true,
-                Title = "Selecciona los 6 archivos .tex del skybox (sky###_lf/rt/up/dn/bk/ft.tex)"
-            };
-
-            if (dialog.ShowDialog() != true)
-                return;
-
-            if (dialog.FileNames.Length == 0)
-                return;
-
-            string destFolder = Path.Combine(Paths.Modifications, "PlatformContent\\pc\\textures\\sky");
-            Directory.CreateDirectory(destFolder);
-
-            int copied = 0;
-            foreach (var file in dialog.FileNames)
-            {
-                if (!file.EndsWith(".tex", StringComparison.InvariantCultureIgnoreCase))
-                    continue;
-
-                string dest = Path.Combine(destFolder, Path.GetFileName(file));
-                Filesystem.AssertReadOnly(dest);
-                File.Copy(file, dest, true);
-                copied++;
-            }
-
-            Frontend.ShowMessageBox(
-                $"Se copiaron {copied} archivo(s) .tex a la carpeta de skybox. Asegurate de haber seleccionado los 6 archivos (lf, rt, up, dn, bk, ft) para que el skybox se vea completo.",
-                MessageBoxImage.Information
-            );
-        }
-
         private readonly Dictionary<string, byte[]> FontHeaders = new()
         {
             { "ttf", new byte[4] { 0x00, 0x01, 0x00, 0x00 } },
@@ -128,44 +92,7 @@ namespace FallenStrap.UI.ViewModels.Settings
             OnPropertyChanged(nameof(DeleteCustomCursorVisibility));
         }
 
-        private void ManageCustomAvatarBackground()
-        {
-            if (!String.IsNullOrEmpty(AvatarBackgroundTask.NewState))
-            {
-                AvatarBackgroundTask.NewState = "";
-            }
-            else
-            {
-                var dialog = new OpenFileDialog
-                {
-                    Filter = "Roblox Place file|*.rbxl"
-                };
-
-                if (dialog.ShowDialog() != true)
-                    return;
-
-                // Roblox place files (.rbxl, binary format) start with this exact 8-byte signature
-                byte[] rbxlHeader = { 0x3C, 0x72, 0x6F, 0x62, 0x6C, 0x6F, 0x78, 0x21 }; // "<roblox!"
-                byte[] fileBytes = File.ReadAllBytes(dialog.FileName).Take(8).ToArray();
-
-                if (!fileBytes.SequenceEqual(rbxlHeader))
-                {
-                    Frontend.ShowMessageBox("El archivo seleccionado no parece ser un .rbxl binario valido (debe exportarse desde Roblox Studio como 'Roblox Place', no como .rbxlx XML).", MessageBoxImage.Error);
-                    return;
-                }
-
-                // Selecting a custom background overrides the built-in old avatar background preset
-                OldAvatarBackgroundTask.NewState = false;
-                AvatarBackgroundTask.NewState = dialog.FileName;
-            }
-
-            OnPropertyChanged(nameof(ChooseCustomAvatarBackgroundVisibility));
-            OnPropertyChanged(nameof(DeleteCustomAvatarBackgroundVisibility));
-        }
-
         public ICommand OpenModsFolderCommand => new RelayCommand(OpenModsFolder);
-
-        public ICommand ImportSkyboxTexturesCommand => new RelayCommand(ImportSkyboxTextures);
 
         public Visibility ChooseCustomFontVisibility => !String.IsNullOrEmpty(TextFontTask.NewState) ? Visibility.Collapsed : Visibility.Visible;
 
@@ -178,12 +105,6 @@ namespace FallenStrap.UI.ViewModels.Settings
         public Visibility ChooseCustomCursorVisibility => !String.IsNullOrEmpty(CustomCursorTask.NewState) ? Visibility.Collapsed : Visibility.Visible;
 
         public Visibility DeleteCustomCursorVisibility => !String.IsNullOrEmpty(CustomCursorTask.NewState) ? Visibility.Visible : Visibility.Collapsed;
-
-        public ICommand ManageCustomAvatarBackgroundCommand => new RelayCommand(ManageCustomAvatarBackground);
-
-        public Visibility ChooseCustomAvatarBackgroundVisibility => !String.IsNullOrEmpty(AvatarBackgroundTask.NewState) ? Visibility.Collapsed : Visibility.Visible;
-
-        public Visibility DeleteCustomAvatarBackgroundVisibility => !String.IsNullOrEmpty(AvatarBackgroundTask.NewState) ? Visibility.Visible : Visibility.Collapsed;
 
         public ICommand OpenCompatSettingsCommand => new RelayCommand(OpenCompatSettings);
 
@@ -223,8 +144,6 @@ namespace FallenStrap.UI.ViewModels.Settings
         public FontModPresetTask TextFontTask { get; } = new();
 
         public CursorModPresetTask CustomCursorTask { get; } = new();
-
-        public AvatarBackgroundModPresetTask AvatarBackgroundTask { get; } = new();
 
         private void OpenCompatSettings()
         {

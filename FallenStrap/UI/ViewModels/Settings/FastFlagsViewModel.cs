@@ -64,7 +64,6 @@ namespace FallenStrap.UI.ViewModels.Settings
                 {
                     case RenderingBackend.Vulkan:
                         App.FastFlags.SetPreset("Rendering.Backend.Vulkan", "True");
-                        App.FastFlags.SetPreset("Rendering.Backend.Vulkan.DisableD3D11", "True");
                         break;
                     case RenderingBackend.OpenGL:
                         // OpenGL requires Direct3D 11 to be explicitly disabled to take effect
@@ -89,56 +88,10 @@ namespace FallenStrap.UI.ViewModels.Settings
             set => App.FastFlags.SetPreset("Rendering.DisableGrass", value ? "0" : null);
         }
 
-        public IReadOnlyDictionary<int, string?> GraphicsQualityLevels => FastFlagManager.GraphicsQualityLevels;
-
-        public int SelectedGraphicsQualityLevel
+        public bool DisableShadows
         {
-            get => GraphicsQualityLevels.FirstOrDefault(x => x.Value == App.FastFlags.GetPreset("Rendering.GraphicsQualityOverride")).Key;
-            set => App.FastFlags.SetPreset("Rendering.GraphicsQualityOverride", GraphicsQualityLevels[value]);
-        }
-
-        // 0 = Normal (default, no override), 1 = Reducido, 2 = Minimo (mejor rendimiento)
-        public int MeshDetailsLevel
-        {
-            get
-            {
-                string? v = App.FastFlags.GetPreset("Rendering.MeshDetails.L01");
-                if (v == "0")
-                    return 2;
-                if (v is not null)
-                    return 1;
-                return 0;
-            }
-            set
-            {
-                switch (value)
-                {
-                    case 2: // Minimo: fuerza el LOD mas bajo posible de inmediato (mejor rendimiento)
-                        App.FastFlags.SetPreset("Rendering.MeshDetails.L01", "0");
-                        App.FastFlags.SetPreset("Rendering.MeshDetails.L12", "0");
-                        App.FastFlags.SetPreset("Rendering.MeshDetails.L23", "0");
-                        App.FastFlags.SetPreset("Rendering.MeshDetails.L34", "0");
-                        break;
-                    case 1: // Reducido: cambia de nivel de detalle un poco antes de lo normal
-                        App.FastFlags.SetPreset("Rendering.MeshDetails.L01", "50");
-                        App.FastFlags.SetPreset("Rendering.MeshDetails.L12", "50");
-                        App.FastFlags.SetPreset("Rendering.MeshDetails.L23", "50");
-                        App.FastFlags.SetPreset("Rendering.MeshDetails.L34", "50");
-                        break;
-                    default: // Normal: sin override, usa el comportamiento de Roblox por defecto
-                        App.FastFlags.SetPreset("Rendering.MeshDetails.L01", null);
-                        App.FastFlags.SetPreset("Rendering.MeshDetails.L12", null);
-                        App.FastFlags.SetPreset("Rendering.MeshDetails.L23", null);
-                        App.FastFlags.SetPreset("Rendering.MeshDetails.L34", null);
-                        break;
-                }
-            }
-        }
-
-        public bool RemoveShadows
-        {
-            get => App.FastFlags.GetPreset("Rendering.RemoveShadows") == "0";
-            set => App.FastFlags.SetPreset("Rendering.RemoveShadows", value ? "0" : null);
+            get => App.FastFlags.GetPreset("Rendering.DisableShadows") == "0";
+            set => App.FastFlags.SetPreset("Rendering.DisableShadows", value ? "0" : null);
         }
 
         public bool PauseVoxelizer
@@ -153,50 +106,30 @@ namespace FallenStrap.UI.ViewModels.Settings
             set => App.FastFlags.SetPreset("Rendering.DisablePostFx", value ? "True" : null);
         }
 
-        public bool DisableAds
-        {
-            get => App.FastFlags.GetPreset("Performance.DisableAds") == "False";
-            set => App.FastFlags.SetPreset("Performance.DisableAds", value ? "False" : null);
-        }
-
-        public bool LowFrameBuffer
-        {
-            get => App.FastFlags.GetPreset("Performance.FrameBufferSize") == "4";
-            set => App.FastFlags.SetPreset("Performance.FrameBufferSize", value ? "4" : null);
-        }
-
         public bool DisableTextureCompositor
         {
-            get => App.FastFlags.GetPreset("Performance.TextureCompositorJobs") == "0";
-            set => App.FastFlags.SetPreset("Performance.TextureCompositorJobs", value ? "0" : null);
+            get => App.FastFlags.GetPreset("Rendering.TextureCompositor") == "0";
+            set => App.FastFlags.SetPreset("Rendering.TextureCompositor", value ? "0" : null);
         }
 
-        public bool LowQualityTerrain
+        public bool SkipTextureMipLevels
         {
-            get => App.FastFlags.GetPreset("Performance.LowTerrain") == "0";
-            set => App.FastFlags.SetPreset("Performance.LowTerrain", value ? "0" : null);
+            get => App.FastFlags.GetPreset("Rendering.TextureQuality.SkipMips") == "-1";
+            set => App.FastFlags.SetPreset("Rendering.TextureQuality.SkipMips", value ? "-1" : null);
         }
 
-        public bool PerfMode
+        public IReadOnlyDictionary<int, string?> GraphicsQualityLevels => FastFlagManager.GraphicsQualityLevels;
+
+        public int SelectedGraphicsQualityLevel
         {
-            get => App.FastFlags.GetPreset("Performance.PerfMode") == "True";
-            set => App.FastFlags.SetPreset("Performance.PerfMode", value ? "True" : null);
+            get => GraphicsQualityLevels.FirstOrDefault(x => x.Value == App.FastFlags.GetPreset("Rendering.GraphicsQualityOverride")).Key;
+            set => App.FastFlags.SetPreset("Rendering.GraphicsQualityOverride", GraphicsQualityLevels[value]);
         }
 
-        public bool SkipMipmaps
+        public bool MeshDetails
         {
-            get => App.FastFlags.GetPreset("Performance.SkipMipmaps") == "8";
-            set => App.FastFlags.SetPreset("Performance.SkipMipmaps", value ? "8" : null);
-        }
-
-        public bool ReduceLightUpdates
-        {
-            get => App.FastFlags.GetPreset("Performance.LightUpdatesMax") == "1";
-            set
-            {
-                App.FastFlags.SetPreset("Performance.LightUpdatesMax", value ? "1" : null);
-                App.FastFlags.SetPreset("Performance.LightUpdatesMin", value ? "1" : null);
-            }
+            get => App.FastFlags.GetPreset("Rendering.MeshDetails.MainViewHigh") == "10000";
+            set => App.FastFlags.SetPreset("Rendering.MeshDetails", value ? "10000" : null);
         }
 
         public string FpsLimit
